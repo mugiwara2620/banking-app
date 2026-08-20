@@ -13,16 +13,20 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "chart.js": "^4.5.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dwolla-v2": "^3.4.2",
     "lucide-react": "^1.31.0",
-    "next": "16.2.6",
+    "next": "^16.3.1",
     "next-themes": "^0.4.6",
     "node-appwrite": "^28.0.0",
     "plaid": "^45.0.0",
+    "postcss": "^8.5.26",
     "query-string": "^9.5.0",
     "react": "19.2.4",
+    "react-chartjs-2": "^5.3.1",
+    "react-countup": "^6.5.3",
     "react-dom": "19.2.4",
     "shadcn": "^4.18.0",
     "tailwind-merge": "^3.6.0",
@@ -31,7 +35,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -39,7 +43,7 @@
     "eslint-config-next": "16.2.6",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "tailwindcss": "^4",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5"
   }
 }
