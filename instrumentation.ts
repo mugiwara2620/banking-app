@@ -2,6 +2,8 @@ import * as Sentry from "@sentry/nextjs";
 
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
+    const dns = await import("node:dns");
+    dns.setDefaultResultOrder?.("ipv4first");
     await import("./sentry.server.config");
   }
 

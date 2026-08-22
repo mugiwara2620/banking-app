@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node --dns-result-order=ipv4first ./node_modules/next/dist/bin/next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -31,6 +31,8 @@
     "react-countup": "^6.5.3",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.85.0",
+    "react-plaid": "^0.13.0",
+    "react-plaid-link": "^5.0.0",
     "shadcn": "^4.18.0",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",

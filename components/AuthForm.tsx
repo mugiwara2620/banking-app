@@ -13,6 +13,7 @@ import CustomInput from './CustomInput'
 import { Button } from './ui/button'
 import { Form } from './ui/form'
 import { getLoggedInUser, signIn, signUp } from '@/lib/actions/user1.actions'
+import PlaidLink from './PlaidLink';
 
 const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
     const router = useRouter();
@@ -72,7 +73,7 @@ const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
                     email: data.email,
                     password: data.password,
                 });
-                
+
                 if (response?.error) {
                     setErrorMessage(response.error);
                 } else if (response) {
@@ -120,6 +121,7 @@ const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
                     <p className={cn('text-16', 'text-gray-700')}>
                         Account created successfully! Click below to proceed to your dashboard.
                     </p>
+                    <PlaidLink user={user} variant="small" />
                     <Button
                         onClick={() => router.push('/')}
                         className={cn('form-btn', 'w-full', 'py-3', 'cursor-pointer')}
