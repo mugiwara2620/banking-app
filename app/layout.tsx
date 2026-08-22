@@ -31,7 +31,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
     >
-      <body className={`${inter.className} ${ibmPlexSerif.variable}`}>
+      {/* Add suppressHydrationWarning here */}
+      <body
+        suppressHydrationWarning
+        className={`${inter.className} ${ibmPlexSerif.variable}`}
+      >
         {children}
       </body>
     </html>

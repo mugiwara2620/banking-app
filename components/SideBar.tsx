@@ -1,20 +1,20 @@
 'use client'
-import { SideBarProps } from '@/types'
+import { SiderbarProps } from '@/types'
 import Link from 'next/link'
 import Image from 'next/image'
 import { sidebarLinks } from '@/constants'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
+import Footer from './Footer'
 
-const SideBar = ({ user }: SideBarProps) => {
+const SideBar = ({ user }: SiderbarProps) => {
     const pathname = usePathname();
     return (
         <div className='sidebar'>
-            <nav className='flex
-            flex-col gap-4'>
-                <Link href="/" className='cursor-pointer items-center flex mb-12 gap-2 '>
+            <nav className={cn('flex', 'flex-col', 'gap-4')}>
+                <Link href="/" className={cn('cursor-pointer', 'items-center', 'flex', 'mb-12', 'gap-2')}>
 
-                    <Image src="/icons/logo.svg" alt="Horizon logo" width={34} height={34} className='size-[24px]  max-xl:size-14' />
+                    <Image src="/icons/logo.svg" alt="Horizon logo" width={34} height={34} className={cn('size-[24px]', 'max-xl:size-14')} />
                     <p className='sidebar-logo'>Horizon</p>
                 </Link>
                 {sidebarLinks.map((link) => {
@@ -33,7 +33,7 @@ const SideBar = ({ user }: SideBarProps) => {
                 USER
             </nav>
 
-            Footer
+            <Footer user={user} />
         </div>
     )
 }

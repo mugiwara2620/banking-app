@@ -1,13 +1,15 @@
 import HeaderBox from '@/components/HeaderBox'
 import RightSideBar from '@/components/RightSideBar'
 import { TotalBalanceBox } from '@/components/TotalBalanceBox'
+import { getLoggedInUser } from '@/lib/actions/user1.actions'
 import React from 'react'
 
-export default function Home() {
-    const loggedIn = { firstName: 'Aymane', lastName: 'Essakhil', email: 'aymane@jsmbank.com' }
+export default async function Home() {
+    const loggedIn = await getLoggedInUser()
+    console.log(loggedIn?.name)
 
     const mockBanks = [
-        { $id: '1', name: 'Bank of America', currentBalance: 1250.35, mask: '1234' },
+        { $id: '1', name: 'Bank of America', currentBalance: 3250.35, mask: '1234' },
         { $id: '2', name: 'Chase Bank', currentBalance: 3450.50, mask: '5678' },
     ]
 
@@ -24,13 +26,14 @@ export default function Home() {
                     <HeaderBox
                         type="greeting"
                         title="Welcome"
-                        user="Aymane"
+                        user={loggedIn?.name}
                         subtext="Access and manage your account and transactions efficiently."
                     />
                     <TotalBalanceBox
                         accounts={mockBanks as any}
+
                         totalBanks={mockBanks.length}
-                        totalCurrentBalance={4700.85}
+                        totalCurrentBalance={6700.85}
                     />
                 </header>
             </div>
