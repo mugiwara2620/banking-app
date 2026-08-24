@@ -4,6 +4,7 @@ import React from 'react'
 import BankCard from './BankCard'
 import { formatAmount } from '@/lib/utils'
 import { cn } from "../lib/utils";
+import PlaidLink from '@/components/PlaidLink'
 
 interface RightSidebarProps {
   user: any
@@ -43,10 +44,7 @@ export default function RightSideBar({
       <section className="banks">
         <div className={cn('flex', 'w-full', 'justify-between')}>
           <h2 className="header-2">My Banks</h2>
-          <Link href="/" className={cn('flex', 'gap-2', 'items-center')}>
-            <Image src="/icons/plus.svg" width={20} height={20} alt="plus" />
-            <h2 className={cn('text-14', 'font-semibold', 'text-gray-600')}>Add Bank</h2>
-          </Link>
+          <PlaidLink user={user} />
         </div>
 
         {banks?.length > 0 ? (

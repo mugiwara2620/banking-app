@@ -1,23 +1,29 @@
 import HeaderBox from '@/components/HeaderBox'
 import RightSideBar from '@/components/RightSideBar'
 import { TotalBalanceBox } from '@/components/TotalBalanceBox'
+import { getAccount, getAccounts } from '@/lib/actions/bank.actions'
 import { getLoggedInUser } from '@/lib/actions/user1.actions'
-import React from 'react'
+import { redirect } from 'next/navigation'
 
-export default async function Home() {
-    const loggedIn = await getLoggedInUser()
-    console.log(loggedIn?.name)
+export default async function Home({ searchParams }: SearchParamProps) {
+    const { id, page } = await searchParams;
+    const loggedIn = await getLoggedInUser();
 
-    const mockBanks = [
-        { $id: '1', name: 'Bank of America', currentBalance: 3250.35, mask: '1234' },
-        { $id: '2', name: 'Chase Bank', currentBalance: 3450.50, mask: '5678' },
-    ]
+    if (!loggedIn) redirect("/sign-in");
 
-    const mockTransactions = [
-        { id: '1', name: 'Spotify Subscription', amount: -14.99, category: 'Subscription' },
-        { id: '2', name: 'Salary Deposit', amount: 2500.00, category: 'Income' },
-        { id: '3', name: 'Coffee Shop', amount: -4.50, category: 'Food and Drink' },
-    ]
+    // 1. Receive accounts object directly (no destructuring { accounts })
+    const accounts = await getAccounts({
+        userId: loggedIn?.$id
+    });
+
+    if (!accounts) return null;
+
+    console.log(accounts)
+    const accountsData = accounts?.data;
+    // 2. Access the first account from the array
+    const appwriteItemId = (id as string) || accountsData?.[0]?.appwriteItemId;
+
+    const account = appwriteItemId ? await getAccount({ appwriteItemId }) : null;
 
     return (
         <section className='home'>
@@ -26,22 +32,21 @@ export default async function Home() {
                     <HeaderBox
                         type="greeting"
                         title="Welcome"
-                        user={loggedIn?.name}
+                        user={loggedIn?.name || 'Guest'}
                         subtext="Access and manage your account and transactions efficiently."
                     />
                     <TotalBalanceBox
-                        accounts={mockBanks as any}
-
-                        totalBanks={mockBanks.length}
-                        totalCurrentBalance={6700.85}
+                        accounts={accountsData}
+                        totalBanks={accounts?.totalBanks}
+                        totalCurrentBalance={accounts?.totalCurrentBalance}
                     />
                 </header>
             </div>
             <RightSideBar
                 user={loggedIn}
-                banks={mockBanks}
-                transactions={mockTransactions}
+                banks={accountsData?.slice(0, 2)}
+                transactions={account?.transactions}
             />
         </section>
-    )
+    );
 }
