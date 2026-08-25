@@ -6,11 +6,12 @@ import { sidebarLinks } from '@/constants'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
+import PlaidLink from './PlaidLink'
 
 const SideBar = ({ user }: SiderbarProps) => {
     const pathname = usePathname();
     return (
-        <div className='sidebar'>
+        <aside className={cn('sidebar', 'z-1000')}>
             <nav className={cn('flex', 'flex-col', 'gap-4')}>
                 <Link href="/" className={cn('cursor-pointer', 'items-center', 'flex', 'mb-12', 'gap-2')}>
 
@@ -30,11 +31,12 @@ const SideBar = ({ user }: SiderbarProps) => {
                         </Link>
                     )
                 })}
+                <PlaidLink user={user} />
                 USER
             </nav>
 
             <Footer user={user} />
-        </div>
+        </aside>
     )
 }
 

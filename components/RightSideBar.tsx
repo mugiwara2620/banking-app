@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import BankCard from './BankCard'
-import { formatAmount } from '@/lib/utils'
+import { countTransactionCategories, formatAmount } from '@/lib/utils'
 import { cn } from "../lib/utils";
 import PlaidLink from '@/components/PlaidLink'
+import Category from './Category'
 
 interface RightSidebarProps {
   user: any
@@ -17,6 +18,7 @@ export default function RightSideBar({
   banks = [],
   transactions = [],
 }: RightSidebarProps) {
+  const categories: CategoryCount[] = countTransactionCategories(transactions);
   return (
     <aside className="right-sidebar">
       {/* Profile Section */}
@@ -71,40 +73,50 @@ export default function RightSideBar({
         ) : (
           <p className={cn('text-14', 'text-gray-500')}>No banks added yet.</p>
         )}
-      </section>
-
-      {/* Latest Transactions Section */}
-      <section className={cn('flex', 'flex-col', 'gap-4', 'px-6', 'py-4')}>
-        <div className={cn('flex', 'w-full', 'justify-between', 'items-center')}>
-          <h2 className="header-2">Latest Transactions</h2>
-          <Link href="/transaction-history" className={cn('text-14', 'font-semibold', 'text-blue-600', 'hover:underline')}>
-            View all
-          </Link>
-        </div>
-
-        {transactions && transactions.length > 0 ? (
-          <div className={cn('flex', 'flex-col', 'gap-3')}>
-            {transactions.slice(0, 4).map((transaction: any, index: number) => (
-              <div key={transaction.id || transaction.$id || index} className={cn('flex', 'items-center', 'justify-between', 'border-b', 'border-gray-100', 'pb-2', 'pt-1')}>
-                <div className={cn('flex', 'items-center', 'gap-3')}>
-                  <div className={cn('flex-center', 'size-9', 'rounded-full', 'bg-blue-25')}>
-                    <Image src="/icons/transaction.svg" width={18} height={18} alt="transaction" />
-                  </div>
-                  <div className={cn('flex', 'flex-col')}>
-                    <p className={cn('text-14', 'font-semibold', 'text-gray-900', 'line-clamp-1')}>{transaction.name}</p>
-                    <p className={cn('text-12', 'font-normal', 'text-gray-500')}>{transaction.category || 'General'}</p>
-                  </div>
-                </div>
-                <p className={`text-14 font-semibold ${transaction.amount < 0 ? 'text-red-500' : 'text-green-600'}`}>
-                  {formatAmount(transaction.amount)}
-                </p>
+        <div className='mt-10 flex flex-1 w-full flex-col gap-6'>
+          <h2 className='header-2'>Top Categories</h2>
+          <div className='space-y-5'>
+            {categories.map((category: any, index: number) => (
+              <div key={index} className={cn('flex', 'items-center', 'gap-3')}>
+                <Category key={category.name} category={category} />
               </div>
             ))}
           </div>
-        ) : (
-          <p className={cn('text-14', 'text-gray-500')}>No recent transactions</p>
-        )}
+        </div>
       </section>
+
+      {/* Latest Transactions Section */}
+      {/* <section className={cn('flex', 'flex-col', 'gap-4', 'px-6', 'py-4')}> */}
+      {/* <div className={cn('flex', 'w-full', 'justify-between', 'items-center')}>
+        <h2 className="header-2">Latest Transactions</h2>
+        <Link href="/transaction-history" className={cn('text-14', 'font-semibold', 'text-blue-600', 'hover:underline')}>
+          View all
+        </Link>
+      </div>
+
+      {transactions && transactions.length > 0 ? (
+        <div className={cn('flex', 'flex-col', 'gap-3')}>
+          {transactions.slice(0, 4).map((transaction: any, index: number) => (
+            <div key={transaction.id || transaction.$id || index} className={cn('flex', 'items-center', 'justify-between', 'border-b', 'border-gray-100', 'pb-2', 'pt-1')}>
+              <div className={cn('flex', 'items-center', 'gap-3')}>
+                <div className={cn('flex-center', 'size-9', 'rounded-full', 'bg-blue-25')}>
+                  <Image src="/icons/transaction.svg" width={18} height={18} alt="transaction" />
+                </div>
+                <div className={cn('flex', 'flex-col')}>
+                  <p className={cn('text-14', 'font-semibold', 'text-gray-900', 'line-clamp-1')}>{transaction.name}</p>
+                  <p className={cn('text-12', 'font-normal', 'text-gray-500')}>{transaction.category || 'General'}</p>
+                </div>
+              </div>
+              <p className={`text-14 font-semibold ${transaction.amount < 0 ? 'text-red-500' : 'text-green-600'}`}>
+                {formatAmount(transaction.amount)}
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className={cn('text-14', 'text-gray-500')}>No recent transactions</p>
+      )} */}
+      {/* </section> */}
     </aside>
   )
 }

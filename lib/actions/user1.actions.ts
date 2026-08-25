@@ -94,7 +94,7 @@ export const createLinkToken = async (user: User) => {
                 client_user_id: user.$id,
             },
             client_name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.name || 'User',
-            products: ['auth'] as Products[],
+            products: ['auth', 'transactions'] as Products[],
             country_codes: ['US'] as CountryCode[],
             language: 'en',
         };
@@ -307,3 +307,20 @@ export const signIn = async (userData: signInProps) => {
         return { error: error?.message || 'Invalid email or password.' };
     }
 };
+
+export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps) => {
+    try {
+        const { database } = await createAdminClient();
+
+        const bank = await database.listDocuments(
+            DATABASE_ID!,
+            BANK_COLLECTION_ID!,
+            [Query.equal('accountId', [accountId])]
+        )
+
+        if (bank.total !== 1) return null
+        return parseStringify(bank.documents[0]);
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -83,11 +83,24 @@ export const createTransfer = async ({
                 value: amount,
             },
         };
+        console.log("[Dwolla] Sending transfer request:", JSON.stringify(requestBody, null, 2));
         return await dwollaClient
             .post("transfers", requestBody)
             .then((res: any) => res.headers.get("location"));
-    } catch (err) {
-        console.error("Transfer fund failed: ", err);
+    } catch (err: any) {
+        console.error("[Dwolla] Transfer fund failed:");
+        console.error("  Status:", err?.status);
+        console.error("  Message:", err?.body?.message ?? err?.message);
+        console.error("  Code:", err?.body?.code);
+        // Dwolla embeds validation errors here
+        const embedded = err?.body?._embedded?.errors;
+        if (embedded?.length) {
+            console.error("  Validation errors:");
+            embedded.forEach((e: any, i: number) => {
+                console.error(`    [${i}] ${e.message} (path: ${e.path})`);
+            });
+        }
+        console.error("  Full error:", JSON.stringify(err?.body ?? err, null, 2));
     }
 };
 

@@ -57,7 +57,6 @@ const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
                     email: data.email,
                     password: data.password
                 }
-                console.log(userData)
                 const newUser = await signUp(userData);
                 if (newUser?.error) {
                     setErrorMessage(newUser.error);

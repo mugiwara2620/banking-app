@@ -1,13 +1,23 @@
 import BankCard from '@/components/BankCard'
 import HeaderBox from '@/components/HeaderBox'
+import { getAccounts } from '@/lib/actions/bank.actions'
+import { getLoggedInUser } from '@/lib/actions/user1.actions'
+import { redirect } from 'next/navigation'
 import React from 'react'
+import { cn } from "../../../lib/utils";
 
-const MyBanks = () => {
-    const loggedIn = {
-        firstName: 'Aymane',
-        lastName: 'Essakhil',
-        email: 'aymane@jsmbank.com'
-    }
+const MyBanks = async () => {
+    const loggedIn = await getLoggedInUser();
+
+    if (!loggedIn) redirect("/sign-in");
+
+    // 1. Receive accounts object directly (no destructuring { accounts })
+    const accounts = await getAccounts({
+        userId: loggedIn?.$id
+    });
+
+    if (!accounts) return null;
+
 
     const mockAccounts = [
         {
@@ -43,11 +53,11 @@ const MyBanks = () => {
 
                 <div className="space-y-4">
                     <h2 className="header-2">Your cards</h2>
-                    <div className="flex flex-wrap gap-6">
-                        {mockAccounts.map((account) => (
+                    <div className={cn('flex', 'flex-wrap', 'gap-6')}>
+                        {accounts?.data?.map((a: Account) => (
                             <BankCard
-                                key={account.id}
-                                account={account}
+                                key={a.id}
+                                account={a}
                                 userName={`${loggedIn.firstName} ${loggedIn.lastName}`}
                             />
                         ))}

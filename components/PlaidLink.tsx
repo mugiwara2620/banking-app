@@ -55,14 +55,13 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
                     variant="ghost"
                     disabled={!ready}
                     className={cn('plaidlink-ghost', 'cursor-pointer')}
-                >
-                    <Image
+                ><Image
                         src="/icons/connect-bank.svg"
-                        alt="connect bank"
                         width={24}
                         height={24}
+                        alt="connect bank"
                     />
-                    <p className={cn('hidden', 'text-[16px]', 'font-semibold', 'text-black-2', 'xl:block')}>Connect Bank</p>
+                    <h2 className={cn('hidden font-semibold text-black-2 xl:block')}>Add Bank</h2>
                 </Button>
             ) : (
                 <Button
@@ -72,12 +71,12 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
                     className={cn('plaidlink-default', 'cursor-pointer')}
                 >
                     <Image
-                        src="/icons/plus.svg"
-                        width={20}
-                        height={20}
-                        alt="plus"
+                        src="/icons/connect-bank.svg"
+                        width={24}
+                        height={24}
+                        alt="connect bank"
                     />
-                    <h2 className={cn('text-14', 'font-semibold', 'text-gray-600')}>Add Bank</h2>
+                    <h2 className={cn('hidden text-16 font-semibold text-black-2 xl:block')}>Add Bank</h2>
                 </Button>
             )}
         </>
