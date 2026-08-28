@@ -168,12 +168,6 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ---
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
 <p align="center">
   Made with love using Next.js & TypeScript
 </p>
